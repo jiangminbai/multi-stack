@@ -1,0 +1,22 @@
+<%- include('../partial/header')%>
+  <div class="signbox">
+    <ul class="nav nav-pills nav-justified">
+      <li><a href="./signin">登录</a></li>
+      <li class="active"><a href="#">注册</a></li>
+    </ul>
+    <form class="signup">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="邮箱" name="email">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="用户名" name="nickname">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder="密码" name="password">
+      </div>
+      <button type="submit" class="btn btn-block btn-primary">注册</button>
+      <div class="alert alert-success hidden"></div>
+      <div class="alert alert-danger hidden"></div>
+    </form>
+  </div>
+<%- include('../partial/footer')%>

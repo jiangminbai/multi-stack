@@ -1,0 +1,22 @@
+<%- include('./partial/header')%>
+  <div class="list-group post-list">
+  <% articles.forEach(function(article) { %>
+    <li class="list-group-item">
+      <div class="author">
+        <a href="/user/<%= article.userId %>" class="author-avatar">
+          <img class="img-circle">
+        </a>
+        <a href="" class="author-name"><%= article.user.nickname %></a>
+        <span class="created-time"><%= article.createdAt %></span>
+      </div>
+      <a href="/article/detail/<%= article.id %>" class="list-topic"><%= article.title %></a>
+      <div class="meta">
+        <a href="" class="tag"><%= article.tag.tag %></a>
+        <span class="meta-item">
+          <i class="glyphicon glyphicon-eye-open"></i> <%= article.pv %>
+        </span>
+      </div>
+    </li>
+  <% }) %>
+  </div>
+<%- include('./partial/footer')%>

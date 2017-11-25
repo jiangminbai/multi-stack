@@ -1,0 +1,11 @@
+<%- include('./partial/header')%>
+  <div class="post-detail">
+    <div class="post-title">
+      <h1><%= post.title %></h1>
+      <span class="post-desc"><%= post.user.nickname %> · <%= post.createdAt %> · <%= post.pv %>次点击</span>
+    </div>
+    <div class="marked">
+      <%- post.content %>
+    </div>
+  </div>
+<%- include('./partial/footer')%>

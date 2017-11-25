@@ -1,0 +1,42 @@
+<%- include('./partial/header') %>
+<div class="user">
+  <div class="content">
+    <div class="content-user">
+      <div class="user-head">
+        <div class="user-cell user-avatar">
+          <img>
+        </div>
+        <div class="user-cell user-text">
+          <div class="user-name"><%= user.nickname %></div>
+          <div class="user-desc">专注前端18年</div>
+        </div>
+        <div class="user-cell user-follow">
+          <button type="button" class="btn btn-primary">关注</button>
+        </div>
+      </div>
+      <div class="list-group post-list">
+        <% user.articles.forEach(function (article) {%>
+        <li class="list-group-item">
+          <div class="author">
+            <a href="/user/<%= article.userId %>" class="author-avatar">
+              <img class="img-circle">
+            </a>
+            <a href="" class="author-name"><%=user.nickname%></a>
+            <span class="created-time"><%= article.createdAt %></span>
+          </div>
+          <a href="/article/detail/<%= article.id %>" class="list-topic"><%= article.title %></a>
+          <div class="meta">
+            <span class="meta-item">
+              <i class="glyphicon glyphicon-eye-open"></i> <%= article.pv %>
+            </span>
+          </div>
+        </li>
+        <%})%>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar">
+    
+  </div>
+</div>
+<%- include('./partial/footer') %>

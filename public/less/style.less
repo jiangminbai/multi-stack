@@ -1,0 +1,257 @@
+@import './bootstrap/variables.less';
+@import './bootstrap/mixins.less';
+@import './highlight.less';
+@import './mark.less';
+
+html, body {
+  height: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  padding-top: 80px;
+  margin-bottom: -51px;
+}
+
+footer.navbar {
+  margin-bottom: 0;
+}
+
+.footer-push {
+  height: 80px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+.btn .glyphicon {
+  margin-right: 5px;
+}
+
+.label-input {
+  font-size: 12px;
+  outline: none;
+  padding: 2px 5px;
+  border: 1px solid #888;
+  line-height: 1.428571429;
+  width: 120px;
+
+  &:focus {
+    border-color: @brand-primary;
+  }
+}
+
+.label-btn {
+  font-size: 12px;
+  line-height: @line-height-base;
+  padding: 2px 6px;
+  border: 1px solid #888;
+  background: @brand-primary;
+  color: #fff;
+  outline: none;
+
+  &:hover {
+    background: #fff;
+    color: @brand-primary;
+  }
+}
+
+.CodeMirror {
+  border: 1px solid #ccc;
+}
+
+// 登录注册
+.signbox {
+  width: 300px;
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.1);
+  margin: 0 auto;
+  margin-top: 100px;
+  background: #fff;
+
+  .signup,.signin {
+    padding: 30px;
+  }
+}
+
+// 发表文章
+.article {
+  .sort {
+    padding: 6px 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    line-height: 2;
+  }
+
+  .label {
+    cursor: pointer;
+  }
+}
+
+.article-submit {
+  .clearfix();
+
+  .article-preview {
+    float: left;
+  }
+  .article-publish {
+    float: right;
+  }
+}
+
+// 文章列表页
+.post-list {
+  .author {
+    margin-bottom: 10px;
+    line-height: 32px;
+    font-size: 12px;
+  }
+
+  .author-avatar {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    line-height: 1;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .author-name {
+    color: #333;
+    margin-left: 6px;
+  }
+
+  .created-time {
+    color: #b4b4b4;
+    margin-left: 6px;
+  }
+
+  .list-topic {
+    display: inline-block;
+    width: 100%;
+    font-size: 16px;
+    color: @gray-dark;
+  }
+
+  .meta {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1;
+    color: #b4b4b4;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 4px;
+    border: 1px solid @brand-danger;
+    background: #fff;
+    color: @brand-danger;
+    margin-right: 10px;
+
+    &:hover {
+      text-decoration: none;
+      background: lighten(@brand-danger, 40%);
+    }
+  }
+
+  .meta-item {
+    margin-right: 10px;
+  }
+}
+
+.list-group-item-icon {
+  font-size: 12px;
+  color: #999;
+  line-height: 1;
+  margin-top: 20px;
+}
+
+// 文章详情页
+.post-detail {
+  padding: 10px 15px;
+  background: #fff;
+
+  .marked {
+    margin-top: 10px;
+  }
+}
+
+.page-module {
+  padding: 10px 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.post-title {
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  margin: 0 -15px;
+
+  h1 {
+    margin-top: 0;
+  }
+}
+
+.post-desc {
+  font-size: 12px;
+  color: #999;
+}
+
+// user
+.user {
+  position: relative;
+
+  .sidebar {
+    width: 380px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #fff;
+  }
+
+  .content {
+    width: 100%;
+    padding-right: 400px;
+  }
+
+  .content-user {
+    // background: #fff;
+  }
+}
+
+.user-head {
+  display: table;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fff;
+  margin-bottom: 10px;
+
+  .user-cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .user-avatar {
+    width: 50px;
+  }
+
+  .user-follow {
+    width: 50px;
+  }
+
+  .user-name {
+    height: 40px;
+    margin-left: 10px;
+    font-size: 20px;
+  }
+
+  .user-desc {
+    height: 24px;
+    margin-left: 10px;
+  }
+}
