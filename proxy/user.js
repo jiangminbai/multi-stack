@@ -1,4 +1,4 @@
-const { User, Category } = require('../models');
+const { user, category } = require('../models');
 
 /**
  * 根据用户名查找用户
@@ -6,7 +6,7 @@ const { User, Category } = require('../models');
  * @return {promise}         用户详情
  */
 exports.findUserByName = function (nickname) {
-  return User.findOne({
+  return user.findOne({
     where: {nickname}
   })
 }
@@ -17,8 +17,9 @@ exports.findUserByName = function (nickname) {
  * @return {promise}      用户详情
  */
 exports.findUserByEmail = function (email) {
-  return User.findOne({
-    where: {email}
+  return user.findOne({
+    where: {email},
+    attributes: ['nickname', 'email', 'password', 'id']
   })
 }
 
@@ -29,7 +30,7 @@ exports.findUserByEmail = function (email) {
  * @return {promise}         用户详情
  */
 exports.findUserByNameOrEmail = function (nickname, email) {
-  return User.findOne({
+  return user.findOne({
     where: {
       $or: [{nickname},{email}]
     }
@@ -43,7 +44,7 @@ exports.findUserByNameOrEmail = function (nickname, email) {
  * @return {promise}         用户详情
  */
 exports.findUserByNameAndKey = function (nickname, key) {
-  return User.findOne({
+  return user.findOne({
     where: {
       nickname,
       retrieve_key: key
@@ -59,13 +60,10 @@ exports.findUserByNameAndKey = function (nickname, key) {
  * @return {promise}         用户详情
  */
 exports.createUser = function (nickname, email, password) {
-  return User.create({
+  return user.create({
     nickname,
     email,
     password,
-    categories: [{ name: 'default' }]
-  },{
-    include: [Category]
   })
 }
 
@@ -76,7 +74,7 @@ exports.createUser = function (nickname, email, password) {
  * @param {number} time  毫秒数
  */
 exports.setUserKeyAndTime = function (email, key, time) {
-  return User.update(
+  return user.update(
     {retrieve_key: key, retrieve_time: time},
     {where: {email}}
   )
@@ -88,7 +86,7 @@ exports.setUserKeyAndTime = function (email, key, time) {
  * @param {obj} opts  用户选项
  */
 exports.setUserByEmail = function (email, opts) {
-  return User.update(
+  return user.update(
     opts,
     {where: {email}}
   )
@@ -100,7 +98,7 @@ exports.setUserByEmail = function (email, opts) {
  * @return {promise}         用户详情
  */
 exports.setUserActive = function (nickname) {
-  return User.update(
+  return user.update(
     {active: true},
     {where: {nickname}}
   )
@@ -112,7 +110,7 @@ exports.setUserActive = function (nickname) {
  * @param {obj} opts     用户选项
  */
 exports.setUserByName = function (nickname, opts) {
-  return User.update(
+  return user.update(
     opts,
     {where: {nickname}}
   )

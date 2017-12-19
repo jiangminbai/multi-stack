@@ -18,10 +18,10 @@ $(function () {
         $submit.text('登录').attr('disabled', false);
       },
       success: function (res) {
-        if (res.status === 200) {
+        if (res.status === 'success') {
           window.location.href = '/';
         } else {
-          $danger.text(res.message).removeClass('hidden');
+          $danger.text(res.msg).removeClass('hidden');
         }
       }
     })
@@ -47,10 +47,10 @@ $(function () {
         $submit.text('注册').attr('disabled', false);
       },
       success: function (res) {
-        if (res.status === 200) {
-          $success.text('注册成功!').removeClass('hidden');
+        if (res.status === 'success') {
+          $success.text(res.data).removeClass('hidden');
         } else {
-          $danger.text(res.message).removeClass('hidden');
+          $danger.text(res.msg).removeClass('hidden');
         }
       }
     })
@@ -65,38 +65,14 @@ $(function () {
     $('.article .article-tag').val(value);
   })
 
-  // 增加标签
-  $('.add-tag .label-btn').on('click', function () {
-    var $labelInput = $(this).siblings('.label-input');
-    var addTagValue = $labelInput.val().trim();
-    if (!addTagValue) return false;
-    $.ajax({
-      url: '/tag/create',
-      type: 'POST',
-      dataType: 'json',
-      data: {
-        tag: addTagValue
-      },
-      beforeSend: function () {
-        $(this).val('增加分类...');
-      },
-      complete: function () {
-        $(this).val('增加分类');
-      },
-      success: function (res) {
-        $('.select-tag').append('<span class="label label-default">'+ addTagValue +'</span>');
-        $labelInput.val('');
-      }
-    })
-  })
-
-  // 初始化markdown编辑器
+  // 初始化发表文章markdown编辑器
   var postEditor = document.getElementById('post-editor');
   if (postEditor) {
     var postTextArea = CodeMirror.fromTextArea(postEditor, {
       mode: 'markdown',
       lineNumbers: true,
       tabSize: 2,
+      maxHighlightLength: 5
     })
   }
 
@@ -128,10 +104,10 @@ $(function () {
         $this.attr('disabled', false);
       },
       success: function (res) {
-        if (res.status === 200) {
+        if (res.status === 'success') {
           $success.text('发表成功!').removeClass('hidden');
         } else {
-          $danger.text(res.message).removeClass('hidden');
+          $danger.text(res.msg).removeClass('hidden');
         }
       }
     })
@@ -143,7 +119,7 @@ $(function () {
     var $this = $(this);
     var textAreaValue = postTextArea.getValue();
     $.ajax({
-      url: '/markdown',
+      url: '/article/markdown',
       type: 'POST',
       dataType: 'json',
       data: {
@@ -156,7 +132,7 @@ $(function () {
         $this.attr('disabled', false);
       },
       success: function (res) {
-        if (res.status === 200) {
+        if (res.status === 'success') {
           let content = res.data.content;
           if ($('.markdown-body').length == 0) {
             var $markBody = $('<div class="markdown-body page-module"></div>');
@@ -188,5 +164,45 @@ $(function () {
       $img.attr('src', placeholder.getData({text: name, color: '#fff', bgcolor: '#333', size: '64x64'}))
     }
   })();
+
+  // 初始化评论编辑器
+  var commentEditor = document.getElementById('comment-editor');
+  if (commentEditor) {
+    var commentTextArea = CodeMirror.fromTextArea(commentEditor, {
+      mode: 'markdown',
+      lineNumbers: true,
+      tabSize: 2,
+    })
+  }
+
+  // 发表评论
+  $('.comment-publish').click(function() {
+    var $this = $(this);
+    var articleId = $('.post-detail').data('id');
+    var content = commentTextArea.getValue();
+
+    $.ajax({
+      url: '/comment',
+      type: 'POST',
+      data: {
+        articleId,
+        content
+      },
+      beforeSend: function() {
+        $this.attr('disabled', true);
+      },
+      complete: function() {
+        $this.attr('disabled', false);
+      },
+      success: function(res) {
+        if (res.status === 'success') {
+          window.location.reload();
+          $('.alert-success').text('发表成功!').removeClass('hidden');
+        } else {
+          $('.alert-danger').text(res.msg).removeClass('hidden');
+        }
+      }
+    })
+  });
 
 })

@@ -8,24 +8,16 @@ let session = require('express-session');
 let RedisStore = require('connect-redis')(session);
 let { wrapRes } = require('./lib/middlewares');
 let config = require('./config');
+let filters = require('./lib/filters');
 
 let app = express();
-
 app.use(wrapRes);
 
-// let index = require('./routes/index');
-// let user = require('./routes/user');
-// let signup = require('./routes/signup');
-// let signin = require('./routes/signin');
-// let logout = require('./routes/logout');
-// let article = require('./routes/article');
-// let markdown = require('./routes/markdown');
-// let tag = require('./routes/tag');
-const router_api = require('./router_api');
 const router_web = require('./router_web');
 
-
-// view engine setup
+Object.keys(filters).forEach(key => {
+  app.locals[key] = filters[key];
+});
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -47,15 +39,6 @@ app.use(session({
   store: new RedisStore(config.redis)
 }))
 
-// app.use('/', index);
-// app.use('/user', user);
-// app.use('/signup', signup);
-// app.use('/signin', signin);
-// app.use('/logout', logout);
-// app.use('/article', article);
-// app.use('/markdown', markdown);
-// app.use('/tag', tag);
-app.use('/api', router_api);
 app.use('/', router_web);
 
 // catch 404 and forward to error handler

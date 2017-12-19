@@ -1,59 +1,83 @@
 const path = require('path');
+const { hash } = require('../lib/util');
 const Sequelize = require('sequelize');
-const { eachSeries } = require('async');
 const config = require('../config');
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.username, config.mysql.password, {
   host: config.mysql.host
 })
 
-const User = sequelize.import(path.resolve(__dirname, './user'));
-const Article = sequelize.import(path.resolve(__dirname, './article'));
-const Tag = sequelize.import(path.resolve(__dirname, './tag'));
-const Category = sequelize.import(path.resolve(__dirname, './category'));
-const Topic = sequelize.import(path.resolve(__dirname, './topic'));
-const Tcomment = sequelize.import(path.resolve(__dirname, './tcomment'));
-const Acoment = sequelize.import(path.resolve(__dirname, './acomment'));
-const Treply = sequelize.import(path.resolve(__dirname, './treply'));
-const Areply = sequelize.import(path.resolve(__dirname, './areply'));
-const Tagself = sequelize.import(path.resolve(__dirname, './tagself'));
-const Userself = sequelize.import(path.resolve(__dirname, './userself'));
+const user = sequelize.import(path.resolve(__dirname, './user'));
+const article = sequelize.import(path.resolve(__dirname, './article'));
+// const Tag = sequelize.import(path.resolve(__dirname, './tag'));
+const category = sequelize.import(path.resolve(__dirname, './category'));
+// const Topic = sequelize.import(path.resolve(__dirname, './topic'));
+// const Tcomment = sequelize.import(path.resolve(__dirname, './tcomment'));
+const comment = sequelize.import(path.resolve(__dirname, './comment'));
+// const Treply = sequelize.import(path.resolve(__dirname, './treply'));
+// const Areply = sequelize.import(path.resolve(__dirname, './areply'));
+// const Tagself = sequelize.import(path.resolve(__dirname, './tagself'));
+// const Userself = sequelize.import(path.resolve(__dirname, './userself'));
 
 // blog关系
-User.hasMany(Category);
-Category.belongsTo(User);
+category.hasMany(article);
+article.belongsTo(category);
 
-Category.hasMany(Article);
-Article.belongsTo(Category);
+user.hasMany(article);
+article.belongsTo(user);
 
-User.hasMany(Article);
-Article.belongsTo(User);
+user.hasMany(comment);
+comment.belongsTo(user);
+article.hasMany(comment);
 
-Article.hasMany(Acoment);
+;(async () => {
+  await sequelize.sync()
+  await createCategory();
+  await createFirstUser();
+  await createFirstArticle();
+  // sequelize.drop();
+})();
 
-Acoment.hasMany(Areply);
+async function createCategory() {
+  const name = ['webfront', 'nodejs', 'mysql', 'linux'];
+  let result;
+  for (let i = 0; i < name.length; i++) {
+    result = await category.findOrCreate({
+      where: {name: name[i]},
+      defaults: {name: name[i]}
+    });
+  }
+  return result;
+}
 
-// bbs关系
-User.hasMany(Topic);
-Topic.belongsTo(User);
+async function createFirstUser() {
+  const passhash = await hash('123456', 10);
 
-Tag.belongsToMany(Topic);
-Topic.belongsToMany(Tag);
+  return user.findOrCreate({
+    where: {nickname: '大王来巡山'},
+    defaults: {
+      nickname: '大王来巡山',
+      email: 'test@qq.com',
+      password: passhash,
+      active: true
+    }
+  })
+}
 
-Topic.hasMany(Tcomment);
+async function createFirstArticle() {
+  article.findOrCreate({
+    where: {id: 1},
+    defaults: {
+      userId: 1,
+      categoryId: 1,
+      title: 'welcome to 全栈社区',
+      content: '代码开源：[https://github.com/jan-wong/multi-stack#multi-stack](https://github.com/jan-wong/multi-stack#multi-stack)',
+    }
+  })
+}
 
-Tcomment.hasMany(Treply);
-
-sequelize.sync()
-// sequelize.drop();
-
-exports.User = User;
-exports.Article = Article;
-exports.Tag = Tag;
-exports.Acoment = Acoment;
-exports.Areply = Areply;
-exports.Tcomment = Tcomment;
-exports.Treply = Treply;
-exports.Tagself = Tagself;
-exports.Userself = Userself;
+exports.user = user;
+exports.category = category;
+exports.article = article;
+exports.comment = comment;
 exports.sequelize = sequelize;

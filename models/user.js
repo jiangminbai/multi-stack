@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING
     },
     active: {
-      DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       defaultValue: true
     },
     retrieve_key: {
@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     retrieve_time: {
       type: DataTypes.DATE,
-      defaultValue: new Date().getTime()
+      defaultValue: DataTypes.NOW
     }
   })
 }

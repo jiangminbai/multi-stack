@@ -1,5 +1,5 @@
 <%- include('./partial/header')%>
-  <div class="post-detail">
+  <div class="post-detail" data-id="<%= post.id %>">
     <div class="post-title">
       <h1><%= post.title %></h1>
       <span class="post-desc"><%= post.user.nickname %> · <%= post.createdAt %> · <%= post.pv %>次点击</span>
@@ -8,4 +8,22 @@
       <%- post.content %>
     </div>
   </div>
+  <ul class="comment">
+    <div class="comment-title">评论区</div>
+    <% comment.forEach(function(item) {%>
+    <li class="comment-list">
+      <div class="comment-desc"><span class="nickname"><%= item.user.nickname %></span><span class="time"><%= item.createdAt %></span></div>
+      <div class="comment-content marked"><%- item.content %></div>
+    </li>
+    <% }) %>
+  </ul>
+  <form class="comment-box">
+    <textarea id="comment-editor" class="form-control" cols="5" rows="5" name="content" style="display: none"></textarea>
+    <div class="comment-submit">
+      <button type="submit" class="btn btn-primary comment-publish"><i class="glyphicon glyphicon-send"></i>发表评论</button>
+    </div>
+    <div class="alert alert-success hidden"></div>
+    <div class="alert alert-danger hidden"></div>
+  </form>
+  
 <%- include('./partial/footer')%>

@@ -1,5 +1,8 @@
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('category', {
-    name: DataTypes.STRING(20),
+    name: {
+      type: DataTypes.STRING(20),
+      unique: true
+    }
   })
 }

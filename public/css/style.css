@@ -160,6 +160,11 @@ input:-webkit-autofill {
 .article-submit .article-publish {
   float: right;
 }
+.wrapper .nav {
+  margin-bottom: 20px;
+  background: #f6f6f6;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
 .post-list .author {
   margin-bottom: 10px;
   line-height: 32px;
@@ -240,6 +245,48 @@ input:-webkit-autofill {
 .post-desc {
   font-size: 12px;
   color: #999;
+}
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.comment {
+  background: #fff;
+  margin-top: 50px;
+}
+.comment .comment-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: #f6f6f6;
+  padding: 10px 0 10px 15px;
+}
+.comment .comment-list {
+  padding: 15px;
+  border-bottom: 1px solid #efefef;
+}
+.comment .comment-desc {
+  margin-bottom: 10px;
+}
+.comment .nickname {
+  font-weight: bold;
+  margin-right: 10px;
+}
+.comment .time {
+  font-size: 12px;
+  color: #4eb980;
+}
+.comment-box {
+  margin-top: 50px;
+}
+.comment-box .CodeMirror {
+  height: 100px;
+}
+.comment-submit {
+  text-align: right;
+  margin-top: 5px;
 }
 .user {
   position: relative;
